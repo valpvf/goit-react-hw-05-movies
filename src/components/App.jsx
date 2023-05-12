@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import Home from '../pages/HomePages';
 import Movies from '../pages/MoviesPages';
 import MovieDetails from '../pages/MovieDetailsPages';
@@ -6,16 +6,26 @@ import Cast from './Cast/Cast';
 import Reviews from './Reviews/Reviews';
 import Header from './Header/Header';
 
-export const App = () => {
+const MailLauot = () => {
   return (
     <>
       <Header />
+      <Outlet />
+    </>
+  );
+};
+
+export const App = () => {
+  return (
+    <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="movies" element={<Movies />}>
-          <Route path=":movieId" element={<MovieDetails />}>
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
+        <Route path="/" element={<MailLauot />}>
+          <Route index element={<Home />} />
+          <Route path="movies" element={<Movies />}>
+            <Route path=":movieId" element={<MovieDetails />}>
+              <Route path="cast" element={<Cast />} />
+              <Route path="reviews" element={<Reviews />} />
+            </Route>
           </Route>
         </Route>
         <Route path="*" element={<Home />} />
