@@ -12,6 +12,7 @@ const MovieDetails = () => {
         getMoviesApi(`/movie/${id}`)
           .then(movie => setMovie(movie))
           .catch(error => console.log(error.message));
+      // console.log('useEffect called');
     },
     [id]
   );
@@ -25,8 +26,11 @@ const MovieDetails = () => {
           width="300"
         />
         <div>
-          <h1>{movie.title}</h1>
-          <p>User score: {Math.round(movie.popularity)}%</p>
+          <h1>
+            {movie.title} (
+            {movie.release_date && movie.release_date.slice(0, 4)})
+          </h1>
+          <p>User score: {Math.round(movie.vote_average * 10)}%</p>
           <h2>Overview</h2>
           <p>{movie.overview}</p>
           <h3>Genres</h3>
@@ -34,11 +38,11 @@ const MovieDetails = () => {
         </div>
       </div>
 
-      {/* <div>
+      <div>
         <h4>Additional information</h4>
-        <a href={`${params.movieId}/Cast`}>Cast</a>
-        <a href=":Reviews">Reviews</a>
-      </div> */}
+        <a href={`${params.movieId}/cast`}>Cast</a>
+        <a href={`${params.movieId}/reviews`}>Reviews</a>
+      </div>
       <Outlet />
     </>
   );
