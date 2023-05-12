@@ -6,13 +6,15 @@ const MovieDetails = () => {
   const params = useParams();
   const [movie, setMovie] = useState({});
   const id = params.movieId.slice(1);
-  useEffect(() => {
-    id &&
-      getMoviesApi(`/movie/${id}`)
-        .then(movie => setMovie(movie))
-        .catch(error => console.log(error.message));
-    console.log(movie);
-  }, [id]);
+  useEffect(
+    movie => {
+      id &&
+        getMoviesApi(`/movie/${id}`)
+          .then(movie => setMovie(movie))
+          .catch(error => console.log(error.message));
+    },
+    [id]
+  );
   return (
     <>
       <a href="/">Go back</a>
@@ -32,11 +34,11 @@ const MovieDetails = () => {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <h4>Additional information</h4>
         <a href={`${params.movieId}/Cast`}>Cast</a>
         <a href=":Reviews">Reviews</a>
-      </div>
+      </div> */}
       <Outlet />
     </>
   );
