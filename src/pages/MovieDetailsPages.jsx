@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { getMoviesApi } from 'services/movieApi';
 
 const MovieDetails = () => {
@@ -18,10 +18,10 @@ const MovieDetails = () => {
   );
   return (
     <>
-      <a href="/">Go back</a>
-      <div style={{ display: 'flex', gap: 40 }}>
+      {/* <a href="/">Go back</a> */}
+      <div style={{ display: 'flex', gap: 40, padding: '15px'}}>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          src={movie.poster_path ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`:  `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg`}
           alt=""
           width="300"
         />
@@ -40,8 +40,8 @@ const MovieDetails = () => {
 
       <div>
         <h4>Additional information</h4>
-        <a href={`${params.movieId}/cast`}>Cast</a>
-        <a href={`${params.movieId}/reviews`}>Reviews</a>
+        <Link to='cast'>Cast</Link>
+        <Link to='reviews'>Reviews</Link>
       </div>
       <Outlet />
     </>

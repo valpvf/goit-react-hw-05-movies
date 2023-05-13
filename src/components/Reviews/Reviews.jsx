@@ -4,7 +4,7 @@ import { getMoviesApi } from 'services/movieApi';
 
 const Reviews = () => {
   const params = useParams();
-  const [review, setReview] = useState({});
+  const [review, setReview] = useState([]);
   const id = params.movieId.slice(1);
   useEffect(
     review => {
@@ -12,19 +12,22 @@ const Reviews = () => {
         getMoviesApi(`/movie/${id}/reviews`)
           .then(review => setReview(review))
           .catch(error => console.log(error.message));
-      console.log(id, review);
       // console.log('useEffect called');
     },
     [id]
   );
   return (
     <ul>
-      {review.results&&review.results.map(el => (
-        <li key={el.id}>
-          <h3>Author: {el.author}</h3>
-          <p>{el.content}</p>
-        </li>
-      ))}
+      {!review.results ? (
+        <h3>We don't have any reviews for tgis movie.</h3>
+      ) : (
+        review.results.map(el => (
+          <li key={el.id}>
+            <h3>Author: {el.author}</h3>
+            <p>{el.content}</p>
+          </li>
+        ))
+      )}
     </ul>
   );
 };

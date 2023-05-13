@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import { getMoviesApi } from 'services/movieApi';
 
 const Home = () => {
@@ -14,7 +13,6 @@ const Home = () => {
   return (
     <>
       <h1>Trending today</h1>
-      <Outlet />
       <ul>
         {movieList
           .filter(el => el.title)

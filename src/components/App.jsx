@@ -6,7 +6,7 @@ import Cast from './Cast/Cast';
 import Reviews from './Reviews/Reviews';
 import Header from './Header/Header';
 
-const MailLauot = () => {
+const MainLauot = () => {
   return (
     <>
       <Header />
@@ -19,14 +19,14 @@ export const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<MailLauot />}>
+        <Route path="/" element={<MainLauot />}>
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
           <Route path="movies/:movieId" element={<MovieDetails />}>
             <Route path="cast" element={<Cast />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
-          <Route path="*" element={<Home />} />
+          {/* <Route path="*" element={<Home />} /> */}
         </Route>
         {/* </Route> */}
       </Routes>
