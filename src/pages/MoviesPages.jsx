@@ -1,40 +1,42 @@
+import MoviesList from 'components/MoviesList/MoviesList';
+import { FormStyled } from 'components/MoviesList/MoviesList.styled';
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { getMoviesApi } from 'services/movieApi';
 
 const Movies = () => {
-  // const params = useParams();
-  const [search, setSearch] = useState([]);
-  const [query, setQuery] = useState('');
-  // const id = params.movie;
+  const [input, setInput] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useSearchParams();
+
+  const query = search.get('query');
 
   useEffect(
-    search => {
-      getMoviesApi(`search/movie`, query)
-        .then(search => setSearch(search.results))
-        .catch(error => console.log(error.message));
+    movies => {
+      query &&
+        getMoviesApi(`search/movie`, query)
+          .then(movies => setMovies(movies.results))
+          .catch(error => console.log(error.message));
       // console.log('useEffect called');
     },
     [query]
   );
   const handleSubmit = e => {
     e.preventDefault();
-    setQuery(e.target.search.value);
+    setSearch({ query: input });
   };
   return (
     <>
-      <form action="search" onSubmit={handleSubmit}>
-        <input type="text" name="search" />
+      <FormStyled onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="input"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+        />
         <button type="submit">Search</button>
-      </form>
-      <ul>
-        {search &&
-          search.map(el => (
-            <li key={el.id}>
-              <a href={`/movies/:${el.id}`}>{el.title}</a>
-            </li>
-          ))}
-      </ul>
+      </FormStyled>
+      <MoviesList forRender={movies} endpoint={''} />
       <Outlet />
     </>
   );

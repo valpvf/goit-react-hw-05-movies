@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+
 import { getMoviesApi } from 'services/movieApi';
+import {
+  AdditionalStyled,
+  GoBackStyled,
+  LinkStyled,
+} from '../components/MoviesList/MoviesList.styled';
 
 const MovieDetails = () => {
   const params = useParams();
+  const id = params.movieId;
   const [movie, setMovie] = useState({});
-  const id = params.movieId.slice(1);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(
     movie => {
       id &&
@@ -16,12 +25,22 @@ const MovieDetails = () => {
     },
     [id]
   );
+
+  const handleClickGoBack = () => {
+    const { state: lastLocation } = location;
+    navigate(lastLocation);
+  };
+
   return (
     <>
-      {/* <a href="/">Go back</a> */}
-      <div style={{ display: 'flex', gap: 40, padding: '15px'}}>
+      <GoBackStyled onClick={handleClickGoBack}>Go back</GoBackStyled>
+      <div style={{ display: 'flex', gap: 40, padding: '15px' }}>
         <img
-          src={movie.poster_path ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`:  `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg`}
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
+              : `https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg`
+          }
           alt=""
           width="300"
         />
@@ -37,12 +56,17 @@ const MovieDetails = () => {
           <p>{movie.genres && movie.genres.map(el => el.name).join(' ')}</p>
         </div>
       </div>
-
+      <hr />
       <div>
-        <h4>Additional information</h4>
-        <Link to='cast'>Cast</Link>
-        <Link to='reviews'>Reviews</Link>
+        <AdditionalStyled>Additional information</AdditionalStyled>
+        <LinkStyled to="cast" state={location.state}>
+          Cast
+        </LinkStyled>
+        <LinkStyled to="reviews" state={location.state}>
+          Reviews
+        </LinkStyled>
       </div>
+      <hr />
       <Outlet />
     </>
   );

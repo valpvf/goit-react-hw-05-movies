@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMoviesApi } from 'services/movieApi';
 
+import { ListStyled, CardsStyled } from './Cast.styled';
+
 const Cast = () => {
   const params = useParams();
   const [cast, setCast] = useState({});
@@ -17,10 +19,13 @@ const Cast = () => {
     [id]
   );
   return (
-    <ul style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
-      {cast.cast &&
+    <ListStyled style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+      {!cast.cast || cast.total_pages === 0 || cast.cast.length === 0 ? (
+        <h3>We don't have any casts for this movie.</h3>
+      ) : (
+        cast.cast &&
         cast.cast.map(el => (
-          <li key={el.id} style={{ width: 150 }}>
+          <CardsStyled key={el.id} style={{ width: 150 }}>
             <img
               src={
                 el.profile_path
@@ -33,9 +38,10 @@ const Cast = () => {
             />
             <p>{el.name}</p>
             <span>Character: {el.character}</span>
-          </li>
-        ))}
-    </ul>
+          </CardsStyled>
+        ))
+      )}
+    </ListStyled>
   );
 };
 

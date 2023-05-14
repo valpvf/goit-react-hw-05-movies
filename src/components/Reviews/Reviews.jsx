@@ -18,8 +18,8 @@ const Reviews = () => {
   );
   return (
     <ul>
-      {!review.results ? (
-        <h3>We don't have any reviews for tgis movie.</h3>
+      {!review.results || review.total_pages === 0 ? (
+        <h3>We don't have any reviews for this movie.</h3>
       ) : (
         review.results.map(el => (
           <li key={el.id}>

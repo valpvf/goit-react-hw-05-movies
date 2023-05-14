@@ -1,3 +1,4 @@
+import MoviesList from 'components/MoviesList/MoviesList';
 import { useEffect, useState } from 'react';
 import { getMoviesApi } from 'services/movieApi';
 
@@ -13,15 +14,7 @@ const Home = () => {
   return (
     <>
       <h1>Trending today</h1>
-      <ul>
-        {movieList
-          .filter(el => el.title)
-          .map(el => (
-            <li key={el.id}>
-              <a href={`/movies/:${el.id}`}>{el.title}</a>
-            </li>
-          ))}
-      </ul>
+      <MoviesList forRender={movieList} endpoint={'movies/'} />
     </>
   );
 };
