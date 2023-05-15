@@ -5,7 +5,7 @@ import { getMoviesApi } from 'services/movieApi';
 const Reviews = () => {
   const params = useParams();
   const [review, setReview] = useState([]);
-  const id = params.movieId.slice(1);
+  const id = params.movieId;
   useEffect(
     review => {
       id &&

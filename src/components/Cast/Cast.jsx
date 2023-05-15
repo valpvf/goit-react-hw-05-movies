@@ -7,7 +7,7 @@ import { ListStyled, CardsStyled } from './Cast.styled';
 const Cast = () => {
   const params = useParams();
   const [cast, setCast] = useState({});
-  const id = params.movieId.slice(1);
+  const id = params.movieId;
   useEffect(
     cast => {
       id &&

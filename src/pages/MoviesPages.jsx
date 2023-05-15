@@ -21,20 +21,23 @@ const Movies = () => {
     },
     [query]
   );
+
+  const handleInput = e => {
+    setInput(e.target.value);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     setSearch({ query: input });
+    setInput('');
   };
   return (
     <>
       <FormStyled onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="input"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-        />
-        <button type="submit">Search</button>
+        <input type="text" name="input" value={input} onChange={handleInput} />
+        <button type="submit" disabled={!input.trim()}>
+          Search
+        </button>
       </FormStyled>
       <MoviesList forRender={movies} endpoint={''} />
       <Outlet />

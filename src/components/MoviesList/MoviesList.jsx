@@ -1,3 +1,4 @@
+import PT from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
 const MoviesList = ({ forRender, endpoint }) => {
@@ -23,6 +24,11 @@ const MoviesList = ({ forRender, endpoint }) => {
           ))}
     </ul>
   );
+};
+
+MoviesList.propTypes = {
+  forRender: PT.array,
+  endpoint: PT.string.isRequired,
 };
 
 export default MoviesList;
